@@ -1,0 +1,6 @@
+server {
+        server_name go-ci-demo.webingenia.com;
+        location / { proxy_pass http://127.0.0.1:8601/; }
+        proxy_cache_key         "$scheme$host$request_uri$http_accept_language";
+}
+
