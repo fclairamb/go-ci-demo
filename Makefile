@@ -3,11 +3,27 @@
 APP=./server
 PORT=5000
 
-$(APP): server.go
-	go build -o $(APP) server.go
+ifeq "$(BUILD_VERSION)" ""
+	BUILD_VERSION=0
+endif
+
+ifeq "$(GIT_COMMIT)" ""
+	GIT_COMMIT="00000000-0000-0000-0000-000000000000"
+endif
+
+FILES=$(shell ls *.go) build.go
+
+$(APP): $(FILES)
+	go build -x -o $(APP)
+
+build.go: Makefile
+	printf 'package main;\nconst BUILD_VERSION = $(BUILD_VERSION)\nconst BUILD_GIT_COMMIT = $(GIT_COMMIT)' >build.go && go fmt build.go
 	
 start: $(APP)
 	$(APP) -port $(PORT)
 
 stop:
 	fuser -k $(PORT)/tcp
+
+clean:
+	- rm $(APP) *~
