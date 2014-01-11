@@ -14,10 +14,10 @@ func main() {
 	port := flag.Int("port", DEFAULT_PORT, "Port to use")
 	flag.Parse()
 
-	log.Printf("Server: Version=%s/%d", BUILD_GIT_COMMIT, BUILD_VERSION)
+	log.Printf("Server: Version=%s/%d", BUILD_GIT_COMMIT, BUILD_NUMBER)
 
 	http.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "This is build", BUILD_VERSION, "from commit", BUILD_GIT_COMMIT)
+		fmt.Fprintln(w, "This is build", BUILD_NUMBER, "from commit", BUILD_GIT_COMMIT)
 	})
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
