@@ -3,7 +3,7 @@
 APP=./server
 PORT=5000
 
-ifeq "$(BUILD_VERSION)" ""
+ifeq "$(BUILD_NUMBER)" ""
 	BUILD_NUMBER=0
 endif
 
