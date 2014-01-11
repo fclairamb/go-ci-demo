@@ -17,7 +17,7 @@ $(APP): $(FILES)
 	go build -x -o $(APP)
 
 build.go: Makefile
-	printf 'package main;\nconst BUILD_VERSION = $(BUILD_VERSION)\nconst BUILD_GIT_COMMIT = $(GIT_COMMIT)' >build.go && go fmt build.go
+	printf 'package main;\nconst BUILD_VERSION = $(BUILD_VERSION)\nconst BUILD_GIT_COMMIT = "$(GIT_COMMIT)"' >build.go && go fmt build.go
 	
 start: $(APP)
 	$(APP) -port $(PORT)
