@@ -11,12 +11,12 @@ ifeq "$(GIT_COMMIT)" ""
 	GIT_COMMIT=00000000-0000-0000-0000-000000000000
 endif
 
-FILES=$(shell ls *.go) build.go
+FILES=$(shell ls *.go)
 
-$(APP): $(FILES)
+$(APP): $(FILES) Makefile
 	go build -x -o $(APP)
 
-build.go: Makefile
+build.go:
 	printf 'package main;\nconst BUILD_NUMBER = $(BUILD_NUMBER)\nconst BUILD_GIT_COMMIT = "$(GIT_COMMIT)"' >build.go && go fmt build.go
 	
 start: $(APP)
