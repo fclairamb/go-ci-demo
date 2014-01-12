@@ -13,7 +13,7 @@ endif
 
 FILES=$(shell ls *.go)
 
-$(APP): $(FILES) Makefile
+$(APP): $(FILES) Makefile build.go
 	go build -x -o $(APP)
 
 build.go:
