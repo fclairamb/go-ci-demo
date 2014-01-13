@@ -33,7 +33,7 @@ func init() {
 			if file != nil {
 				if fi, err := file.Stat(); err == nil {
 					if fi.Size() > LOGS_FILE_MAX_SIZE {
-						log.Println("Rotating logfile...")
+						log.Println("We have a size of", fi.Size(), ": Rotating logfile...")
 						file.Close()
 						os.Remove(LOGS_FILE_OLD)
 						os.Rename(LOGS_FILE, LOGS_FILE_OLD)
