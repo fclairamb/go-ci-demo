@@ -24,15 +24,17 @@ func main() {
 	log.Printf("Server: Version=%s/%d", BUILD_GIT_COMMIT, BUILD_NUMBER)
 
 	m.Get("/version", func() string {
-		out := fmt.Sprint("This is build ", BUILD_NUMBER, " from commit ", BUILD_GIT_COMMIT)
-		log.Println(out)
-		return out
+		return fmt.Sprint("This is build ", BUILD_NUMBER, " from commit ", BUILD_GIT_COMMIT)
 	})
 
-	m.Get("/cgo", func() string {
-		out := fmt.Sprint("Number of cgo calls: ", runtime.NumGoroutine())
-		log.Println(out)
-		return out
+	m.Get("/go", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(fmt.Sprintln("Version:", runtime.Version())))
+		w.Write([]byte(fmt.Sprintln("CGO calls:", runtime.NumCgoCall())))
+		{
+			var mem runtime.MemStats
+			runtime.ReadMemStats(&mem)
+			w.Write([]byte(fmt.Sprintln("MEM: Footprint: ", mem.Alloc, ", Mallocs: ", mem.Mallocs, ", Frees: ", mem.Frees, ", GCs: ", mem.NumGC, "Next GC in ", (mem.NextGC - mem.HeapAlloc), " bytes")))
+		}
 	})
 
 	m.Get("/logs", func(w http.ResponseWriter, r *http.Request) {
