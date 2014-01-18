@@ -1,6 +1,6 @@
 # It's just to make things simpler. This makefile is pretty much useless.
 
-APP=./server
+APP=./go-ci-demo
 PORT=5000
 
 ifeq "$(BUILD_NUMBER)" ""
@@ -14,7 +14,7 @@ endif
 FILES=$(shell ls *.go)
 
 $(APP): $(FILES) Makefile build.go
-	go build -x -o $(APP)
+	go build -x
 
 build.go:
 	printf 'package main;\nconst BUILD_NUMBER = $(BUILD_NUMBER)\nconst BUILD_GIT_COMMIT = "$(GIT_COMMIT)"' >build.go && go fmt build.go

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bitbucket.org/bertimus9/systemstat"
 	"bufio"
 	"flag"
 	"fmt"
@@ -34,6 +35,10 @@ func main() {
 			var mem runtime.MemStats
 			runtime.ReadMemStats(&mem)
 			w.Write([]byte(fmt.Sprintln("MEM: Footprint: ", mem.Alloc, ", Mallocs: ", mem.Mallocs, ", Frees: ", mem.Frees, ", GCs: ", mem.NumGC, "Next GC in ", (mem.NextGC - mem.HeapAlloc), " bytes")))
+		}
+		{
+			cpuSample := systemstat.GetProcCPUSample()
+			w.Write([]byte(fmt.Sprintf("PROC: %+v\n", cpuSample)))
 		}
 	})
 
