@@ -60,10 +60,15 @@ func main() {
 		fmt.Fprintln(w, "There's no favicon.")
 	})
 
-	m.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	m.Get("/:name", func(w http.ResponseWriter, r *http.Request) {
 		out := fmt.Sprintf("Hi there, I love \"%s\" !", strings.Replace(r.URL.Path[1:], "/", "<SLASH>", -1))
 		log.Println(out)
 		w.Write([]byte(out))
+	})
+
+	m.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		w.Write([]byte(`Source code is <a href="https://github.com/fclairamb/go-ci-demo">on github</a>.`))
 	})
 
 	log.Printf("Listening on port %d...", *port)
