@@ -14,7 +14,7 @@ endif
 FILES=$(shell ls *.go)
 
 $(APP): $(FILES) Makefile build.go
-	go build -x
+	go build -o $(APP) -x
 
 build.go:
 	printf 'package main;\nconst BUILD_NUMBER = $(BUILD_NUMBER)\nconst BUILD_GIT_COMMIT = "$(GIT_COMMIT)"' >build.go && go fmt build.go
